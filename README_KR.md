@@ -14,12 +14,39 @@ Jira 기반 피처 브랜치의 종합적인 변경 로그를 자동으로 생�
 
 ## 설치
 
-Claude Code 마켓플레이스에서 설치할 수 있습니다.
+### 방법 1: 직접 설치 (권장)
+
+Claude Code 스킬 디렉토리에 저장소를 클론하세요:
 
 ```bash
-# Claude Code를 통해 설치
-/install change-log
+# 개인 스킬 디렉토리에 클론
+git clone https://github.com/kdanuu/change-log.git ~/.claude/skills/change-log
 ```
+
+다음 Claude Code 세션에서 스킬이 자동으로 사용 가능해집니다.
+
+### 방법 2: 수동 설치
+
+1. 스킬 디렉토리 생성:
+```bash
+mkdir -p ~/.claude/skills/change-log
+```
+
+2. `SKILL.md` 파일 다운로드:
+```bash
+curl -o ~/.claude/skills/change-log/SKILL.md https://raw.githubusercontent.com/kdanuu/change-log/main/SKILL.md
+```
+
+3. Claude Code를 재시작하거나 새 대화를 시작하세요.
+
+### 설치 확인
+
+설치 후 Claude에게 다음과 같이 물어보세요:
+```
+What skills are available?
+```
+
+목록에서 `change-log`를 확인할 수 있습니다.
 
 ## 사용 방법
 

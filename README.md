@@ -14,12 +14,39 @@ A Claude Code skill that automatically generates comprehensive change logs for J
 
 ## Installation
 
-This skill is available in the Claude Code Marketplace.
+### Method 1: Direct Installation (Recommended)
+
+Clone the repository into your Claude Code skills directory:
 
 ```bash
-# Install via Claude Code
-/install change-log
+# Clone into personal skills directory
+git clone https://github.com/kdanuu/change-log.git ~/.claude/skills/change-log
 ```
+
+The skill will be automatically available in your next Claude Code session.
+
+### Method 2: Manual Installation
+
+1. Create a directory for the skill:
+```bash
+mkdir -p ~/.claude/skills/change-log
+```
+
+2. Download the `SKILL.md` file:
+```bash
+curl -o ~/.claude/skills/change-log/SKILL.md https://raw.githubusercontent.com/kdanuu/change-log/main/SKILL.md
+```
+
+3. Restart Claude Code or start a new conversation.
+
+### Verify Installation
+
+After installation, verify by asking Claude:
+```
+What skills are available?
+```
+
+You should see `change-log` in the list.
 
 ## Usage
 

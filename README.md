@@ -1,123 +1,166 @@
-# Change Log Generator for Claude Code
+# Claude Code Skills Collection
 
 English | [한국어](README_KR.md)
 
-A Claude Code skill that automatically generates comprehensive change logs for Jira-based feature branches and publishes them to Confluence.
+A curated collection of production-ready skills for [Claude Code](https://github.com/anthropics/claude-code) that enhance your development workflow with AI-powered automation.
 
-## Features
+## 📦 Available Skills
 
-- 🎯 **Automatic Jira ticket detection** from branch names
-- 📊 **Git diff analysis** with AI-powered summaries
-- 📝 **Confluence integration** for automatic documentation
-- 🔄 **Smart page management** - creates or appends to existing pages
-- 🤖 **AI-generated insights** - overview, technical details, and impact analysis
+This repository is organized as a **monorepo** containing multiple Claude Code skills, each designed to solve specific development challenges:
 
-## Installation
+### 🔄 [change-log](skills/change-log/)
+**Automated Changelog Generation for Jira & Confluence**
 
-### Via Claude Code Marketplace (Recommended)
+Automatically generates comprehensive change logs from your git branches and publishes them to Confluence with full Jira integration.
 
-1. Add the marketplace:
+**Key Features:**
+- 🎯 Automatic Jira ticket detection from branch names
+- 📊 AI-powered git diff analysis
+- 📝 One-click Confluence documentation
+- 🔄 Smart page management (create or append)
+- 🤖 Intelligent impact analysis and technical summaries
+
+**Use cases:** Release documentation, team collaboration, change tracking
+
+[→ View full documentation](skills/change-log/)
+
+---
+
+### 🛠️ [api-codegen](skills/api-codegen/)
+**Production-Ready API Client Generator**
+
+Generate type-safe, production-ready API client code from Swagger/OpenAPI specifications with interactive customization.
+
+**Key Features:**
+- 📋 Parse Swagger/OpenAPI (URL or local file)
+- 🔍 Analyze existing project structure and code style
+- 🎨 Generate code matching your project conventions
+- ✅ Create comprehensive unit and integration tests
+- 🔧 Support for multiple languages (Kotlin, Java, TypeScript, Python)
+- 🏗️ Framework-aware (Spring Boot, React, Vue, FastAPI, etc.)
+
+**Use cases:** Microservice integration, third-party API consumption, backend-frontend alignment
+
+[→ View full documentation](skills/api-codegen/)
+
+---
+
+## 🚀 Quick Start
+
+### Installation via Marketplace
+
+1. **Add the marketplace:**
 ```bash
 /plugin marketplace add kdanuu/change-log
 ```
 
-2. Install the plugin:
+2. **Install a skill:**
 ```bash
+# Install changelog generator
 /plugin install change-log
+
+# Or install API code generator
+/plugin install api-codegen
 ```
 
-3. The skill will be automatically available in your next conversation.
+3. **Use it in your next conversation:**
+```bash
+/change-log
+# or
+/api-codegen https://api.example.com/swagger.json
+```
 
 ### Verify Installation
 
-After installation, verify by asking Claude:
+Ask Claude to list available skills:
 ```
 What skills are available?
 ```
 
-You should see `change-log` in the list.
+You should see the installed skills in the response.
 
-## Usage
+## 📖 How to Use
 
-### First-time Setup
+Each skill comes with its own comprehensive documentation:
+- [change-log Usage Guide](skills/change-log/)
+- [api-codegen Usage Guide](skills/api-codegen/)
 
-On first use, the skill will guide you through an interactive setup:
-
+Basic usage pattern:
 ```bash
-/change-log
+# Via skill command
+/skill-name [options]
+
+# Or via natural language
+"generate a changelog"
+"create API client from swagger"
 ```
 
-You'll need:
-1. **Confluence page URL** - The parent page where changelogs will be created
-2. **Atlassian email** - Your Atlassian account email
-3. **Atlassian API token** - Create one at https://id.atlassian.com/manage-profile/security/api-tokens
-
-### Generating a Changelog
-
-Once configured, simply run:
-
-```bash
-/change-log
-```
-
-Or say:
-- "create changelog"
-- "update confluence changelog"
-
-The skill will:
-1. Extract the Jira ticket from your branch name (e.g., `feature/PROJ-123-description`)
-2. Analyze git changes between your branch and `develop`
-3. Fetch Jira ticket information
-4. Generate an AI-powered change summary
-5. Publish to Confluence with a formatted page
-
-## Branch Name Format
-
-Your branch should follow this pattern:
-- `feature/JIRA-123-description`
-- `bugfix/JIRA-456-fix-something`
-
-If your branch doesn't match this pattern, the skill will ask you to provide the ticket number manually.
-
-## Generated Changelog Format
-
-Each changelog includes:
-- **Jira ticket information** - Summary, description, status
-- **Overview** - High-level summary of changes
-- **Technical Details** - Key architectural or implementation changes
-- **Files Changed** - List of modified, added, or deleted files
-- **Commit History** - All commits in the branch
-- **Impact Analysis** - Affected parts of the system
-- **Code Statistics** - Lines changed, files modified
-
-## Configuration
-
-Configuration is stored at `~/.claude/confluence-changelog.json` and includes:
-- Jira and Confluence URLs
-- API credentials
-- Space key and parent page ID
-- Branch pattern (customizable)
-- Changelog page title template
-
-## Example Changelog Page Title
+## 🗂️ Repository Structure
 
 ```
-Change Log - 2026-01 - OAuth2 사용자 인증 구현
+.
+├── skills/
+│   ├── change-log/          # Changelog generation skill
+│   │   └── SKILL.md         # Skill prompt & documentation
+│   └── api-codegen/         # API code generator skill
+│       └── SKILL.md         # Skill prompt & documentation
+├── .claude-plugin/
+│   └── marketplace.json     # Marketplace configuration
+└── README.md               # This file
 ```
 
-Format: `Change Log - {YYYY-MM} - {Jira Ticket Summary}`
+## 🔮 Roadmap & Future Skills
 
-## Requirements
+We're continuously expanding this collection with new productivity-boosting skills. Planned additions include:
 
-- Claude Code CLI
-- Git repository
-- Jira account with API access
-- Confluence account with write permissions
+- 🧪 **test-generator**: Intelligent test generation from existing code
+- 📚 **doc-sync**: Keep documentation in sync with code changes
+- 🔐 **security-audit**: Automated security vulnerability scanning
+- 🎯 **code-reviewer**: AI-powered code review and suggestions
+- 🔄 **migration-helper**: Assist with framework/library migrations
 
-## License
+*Have an idea for a new skill?* [Open an issue](https://github.com/kdanuu/change-log/issues) or submit a pull request!
 
-MIT
+## 🤝 Contributing
 
-## Author
+We welcome contributions! Here's how you can help:
 
-Created by danwoo-kim
+1. **Report bugs or request features** via [GitHub Issues](https://github.com/kdanuu/change-log/issues)
+2. **Submit improvements** through pull requests
+3. **Share your own skills** - we'd love to include them!
+
+### Adding a New Skill
+
+1. Create a new directory under `skills/`
+2. Add a `SKILL.md` file with your skill prompt
+3. Update `.claude-plugin/marketplace.json`
+4. Test your skill thoroughly
+5. Submit a pull request
+
+See existing skills for reference structure.
+
+## 📋 Requirements
+
+- [Claude Code CLI](https://github.com/anthropics/claude-code) (latest version recommended)
+- Git (for version control features)
+- Additional requirements vary by skill (see individual skill documentation)
+
+## 📄 License
+
+MIT License - See [LICENSE](LICENSE) file for details
+
+## 👤 Author
+
+Created and maintained by **danwoo-kim** ([@kdanuu](https://github.com/kdanuu))
+
+## 🌟 Support
+
+If you find these skills helpful, please:
+- ⭐ Star this repository
+- 🐛 Report issues you encounter
+- 💡 Suggest new features or skills
+- 📢 Share with your team
+
+---
+
+**Happy Coding with Claude!** 🎉

@@ -1,123 +1,166 @@
-# Change Log Generator for Claude Code
+# Claude Code 스킬 컬렉션
 
 [English](README.md) | 한국어
 
-Jira 기반 피처 브랜치의 종합적인 변경 로그를 자동으로 생성하고 Confluence에 게시하는 Claude Code 스킬입니다.
+[Claude Code](https://github.com/anthropics/claude-code)를 위한 프로덕션 레벨의 스킬 모음으로, AI 기반 자동화를 통해 개발 워크플로우를 향상시킵니다.
 
-## 주요 기능
+## 📦 제공되는 스킬
 
-- 🎯 **자동 Jira 티켓 감지** - 브랜치 이름에서 티켓 번호 추출
-- 📊 **Git diff 분석** - AI 기반 변경사항 요약
-- 📝 **Confluence 통합** - 자동 문서화
-- 🔄 **스마트 페이지 관리** - 기존 페이지에 추가하거나 새로 생성
-- 🤖 **AI 생성 인사이트** - 개요, 기술 세부사항, 영향 분석
+이 저장소는 **모노레포**로 구성되어 있으며, 각각의 특정 개발 과제를 해결하도록 설계된 여러 Claude Code 스킬을 포함합니다:
 
-## 설치
+### 🔄 [change-log](skills/change-log/)
+**Jira & Confluence 자동 변경로그 생성기**
 
-### Claude Code 마켓플레이스를 통한 설치 (권장)
+Git 브랜치에서 자동으로 종합적인 변경 로그를 생성하고 Jira 통합과 함께 Confluence에 게시합니다.
 
-1. 마켓플레이스 추가:
+**주요 기능:**
+- 🎯 브랜치 이름에서 자동 Jira 티켓 감지
+- 📊 AI 기반 git diff 분석
+- 📝 원클릭 Confluence 문서화
+- 🔄 스마트 페이지 관리 (생성 또는 추가)
+- 🤖 지능형 영향 분석 및 기술 요약
+
+**사용 사례:** 릴리즈 문서화, 팀 협업, 변경사항 추적
+
+[→ 전체 문서 보기](skills/change-log/)
+
+---
+
+### 🛠️ [api-codegen](skills/api-codegen/)
+**프로덕션 레벨 API 클라이언트 생성기**
+
+Swagger/OpenAPI 명세서에서 타입 안전한 프로덕션 레벨의 API 클라이언트 코드를 대화형 커스터마이징과 함께 생성합니다.
+
+**주요 기능:**
+- 📋 Swagger/OpenAPI 파싱 (URL 또는 로컬 파일)
+- 🔍 기존 프로젝트 구조 및 코드 스타일 분석
+- 🎨 프로젝트 컨벤션에 맞는 코드 생성
+- ✅ 포괄적인 단위 및 통합 테스트 작성
+- 🔧 다양한 언어 지원 (Kotlin, Java, TypeScript, Python)
+- 🏗️ 프레임워크 인식 (Spring Boot, React, Vue, FastAPI 등)
+
+**사용 사례:** 마이크로서비스 통합, 서드파티 API 연동, 백엔드-프론트엔드 정렬
+
+[→ 전체 문서 보기](skills/api-codegen/)
+
+---
+
+## 🚀 빠른 시작
+
+### 마켓플레이스를 통한 설치
+
+1. **마켓플레이스 추가:**
 ```bash
 /plugin marketplace add kdanuu/change-log
 ```
 
-2. 플러그인 설치:
+2. **스킬 설치:**
 ```bash
+# 변경로그 생성기 설치
 /plugin install change-log
+
+# 또는 API 코드 생성기 설치
+/plugin install api-codegen
 ```
 
-3. 다음 대화에서 스킬이 자동으로 사용 가능해집니다.
+3. **다음 대화에서 사용:**
+```bash
+/change-log
+# 또는
+/api-codegen https://api.example.com/swagger.json
+```
 
 ### 설치 확인
 
-설치 후 Claude에게 다음과 같이 물어보세요:
+Claude에게 사용 가능한 스킬 목록을 요청하세요:
 ```
 What skills are available?
 ```
 
-목록에서 `change-log`를 확인할 수 있습니다.
+응답에서 설치된 스킬을 확인할 수 있습니다.
 
-## 사용 방법
+## 📖 사용 방법
 
-### 최초 설정
+각 스킬은 자체 종합 문서를 제공합니다:
+- [change-log 사용 가이드](skills/change-log/)
+- [api-codegen 사용 가이드](skills/api-codegen/)
 
-처음 사용할 때 스킬이 대화형 설정 과정을 안내합니다:
-
+기본 사용 패턴:
 ```bash
-/change-log
+# 스킬 명령어 사용
+/스킬이름 [옵션]
+
+# 또는 자연어로
+"변경로그 생성해줘"
+"swagger에서 API 클라이언트 만들어줘"
 ```
 
-필요한 정보:
-1. **Confluence 페이지 URL** - 변경 로그를 생성할 부모 페이지
-2. **Atlassian 이메일** - Atlassian 계정 이메일
-3. **Atlassian API 토큰** - https://id.atlassian.com/manage-profile/security/api-tokens 에서 생성
-
-### 변경 로그 생성
-
-설정이 완료되면 다음과 같이 실행하세요:
-
-```bash
-/change-log
-```
-
-또는 다음과 같이 말해도 됩니다:
-- "create changelog"
-- "update confluence changelog"
-
-스킬은 다음 작업을 수행합니다:
-1. 브랜치 이름에서 Jira 티켓 추출 (예: `feature/PROJ-123-description`)
-2. 현재 브랜치와 `develop` 브랜치 간의 git 변경사항 분석
-3. Jira 티켓 정보 가져오기
-4. AI 기반 변경사항 요약 생성
-5. 포맷된 페이지로 Confluence에 게시
-
-## 브랜치 이름 형식
-
-브랜치는 다음 패턴을 따라야 합니다:
-- `feature/JIRA-123-description`
-- `bugfix/JIRA-456-fix-something`
-
-브랜치가 이 패턴과 일치하지 않으면, 스킬이 티켓 번호를 수동으로 입력하도록 요청합니다.
-
-## 생성되는 변경 로그 형식
-
-각 변경 로그에는 다음 내용이 포함됩니다:
-- **Jira 티켓 정보** - 요약, 설명, 상태
-- **개요** - 변경사항의 개략적 요약
-- **기술 세부사항** - 주요 아키텍처 또는 구현 변경사항
-- **변경된 파일** - 수정, 추가, 삭제된 파일 목록
-- **커밋 히스토리** - 브랜치의 모든 커밋
-- **영향 분석** - 영향을 받는 시스템 부분
-- **코드 통계** - 변경된 라인 수, 수정된 파일 수
-
-## 설정
-
-설정은 `~/.claude/confluence-changelog.json`에 저장되며 다음을 포함합니다:
-- Jira 및 Confluence URL
-- API 인증 정보
-- Space Key 및 부모 페이지 ID
-- 브랜치 패턴 (커스터마이징 가능)
-- 변경 로그 페이지 제목 템플릿
-
-## 변경 로그 페이지 제목 예시
+## 🗂️ 저장소 구조
 
 ```
-Change Log - 2026-01 - OAuth2 사용자 인증 구현
+.
+├── skills/
+│   ├── change-log/          # 변경로그 생성 스킬
+│   │   └── SKILL.md         # 스킬 프롬프트 & 문서
+│   └── api-codegen/         # API 코드 생성기 스킬
+│       └── SKILL.md         # 스킬 프롬프트 & 문서
+├── .claude-plugin/
+│   └── marketplace.json     # 마켓플레이스 설정
+└── README.md               # 이 파일
 ```
 
-형식: `Change Log - {YYYY-MM} - {Jira 티켓 요약}`
+## 🔮 로드맵 & 향후 스킬
 
-## 요구사항
+생산성을 높이는 새로운 스킬로 이 컬렉션을 지속적으로 확장하고 있습니다. 계획된 추가 사항:
 
-- Claude Code CLI
-- Git 저장소
-- API 액세스 권한이 있는 Jira 계정
-- 쓰기 권한이 있는 Confluence 계정
+- 🧪 **test-generator**: 기존 코드에서 지능형 테스트 생성
+- 📚 **doc-sync**: 코드 변경사항과 문서 동기화 유지
+- 🔐 **security-audit**: 자동화된 보안 취약점 스캐닝
+- 🎯 **code-reviewer**: AI 기반 코드 리뷰 및 제안
+- 🔄 **migration-helper**: 프레임워크/라이브러리 마이그레이션 지원
 
-## 라이선스
+*새로운 스킬에 대한 아이디어가 있으신가요?* [이슈 열기](https://github.com/kdanuu/change-log/issues) 또는 풀 리퀘스트를 제출해주세요!
 
-MIT
+## 🤝 기여하기
 
-## 제작자
+기여를 환영합니다! 다음과 같이 도울 수 있습니다:
 
-danwoo-kim
+1. **버그 리포트 또는 기능 요청** - [GitHub Issues](https://github.com/kdanuu/change-log/issues)를 통해
+2. **개선사항 제출** - 풀 리퀘스트를 통해
+3. **자신의 스킬 공유** - 포함시키고 싶습니다!
+
+### 새 스킬 추가하기
+
+1. `skills/` 아래에 새 디렉토리 생성
+2. 스킬 프롬프트가 포함된 `SKILL.md` 파일 추가
+3. `.claude-plugin/marketplace.json` 업데이트
+4. 스킬을 철저히 테스트
+5. 풀 리퀘스트 제출
+
+기존 스킬을 참조 구조로 확인하세요.
+
+## 📋 요구사항
+
+- [Claude Code CLI](https://github.com/anthropics/claude-code) (최신 버전 권장)
+- Git (버전 관리 기능용)
+- 스킬별로 추가 요구사항이 다름 (개별 스킬 문서 참조)
+
+## 📄 라이선스
+
+MIT License - 자세한 내용은 [LICENSE](LICENSE) 파일 참조
+
+## 👤 제작자
+
+**danwoo-kim** ([@kdanuu](https://github.com/kdanuu))이 제작 및 유지 관리합니다.
+
+## 🌟 지원하기
+
+이 스킬들이 도움이 되었다면:
+- ⭐ 이 저장소에 스타를 눌러주세요
+- 🐛 발견한 이슈를 리포트해주세요
+- 💡 새로운 기능이나 스킬을 제안해주세요
+- 📢 팀과 공유해주세요
+
+---
+
+**Claude와 함께 즐거운 코딩하세요!** 🎉

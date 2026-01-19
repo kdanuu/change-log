@@ -7,7 +7,10 @@
   "plugins": [
     {
       "name": "change-log",
-      "source": ".",
+      "source": {
+        "source": "github",
+        "repo": "kdanuu/change-log"
+      },
       "description": "Generates a comprehensive Change Log for Jira-based feature branches and publishes it to Confluence when merging to develop",
       "version": "1.0.0",
       "author": {

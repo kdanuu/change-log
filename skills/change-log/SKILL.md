@@ -94,10 +94,13 @@ When config.json doesn't exist, guide the user through this interactive setup:
 
 ## Process (After Configuration is Complete)
 
-### 1. Extract Jira Ticket from Branch
+### 1. Extract Jira Ticket from Branch (Optional)
 - Get current git branch name
-- Extract Jira ticket number from branch name pattern: `feature/JIRA-123-*` or `bugfix/JIRA-123-*`
-- If no Jira ticket found, ask user to provide ticket number manually
+- Extract Jira ticket number from branch name pattern: `feature/JIRA-123-*`, `bugfix/JIRA-123-*`, or `hotfix/JIRA-123-*`
+- If no Jira ticket found in branch name:
+  - Ask user if there's an associated Jira ticket
+  - If user says no or doesn't provide one, continue WITHOUT Jira ticket
+  - Changelog will be created without Jira ticket information
 
 ### 2. Gather Change Information
 - Get git diff between current branch and develop: `git diff develop...HEAD`
@@ -105,33 +108,36 @@ When config.json doesn't exist, guide the user through this interactive setup:
 - Get list of changed files: `git diff --name-status develop...HEAD`
 - Count lines changed: `git diff --stat develop...HEAD`
 
-### 3. Fetch Jira Ticket Information
-Using Jira REST API:
-- GET `/rest/api/3/issue/{ticketNumber}`
+### 3. Fetch Jira Ticket Information (if Jira ticket exists)
+If a Jira ticket number was found or provided:
+- Using Jira REST API: GET `/rest/api/3/issue/{ticketNumber}`
 - Extract: summary, description, issue type, status, assignee, priority
+- This information will be used in the changelog title and Jira comment
+
+If no Jira ticket:
+- Skip this step and continue with changelog generation
 
 ### 4. Generate AI-Powered Change Summary
 Analyze the code changes and generate:
-- **Overview**: High-level summary of what changed and why
-- **Technical Details**: Key architectural or implementation changes
-- **Impact Analysis**: What parts of the system are affected
-- **Breaking Changes**: Any breaking changes or migration notes
-- **Dependencies**: New dependencies added or updated
+- **Overview**: High-level summary of what changed and why (1-2 sentences)
+- **Technical Changes**: Key implementation changes in bullet points (concise, focused on actual code changes)
+- **Impact**: Brief note on affected systems (optional, only if significant)
 
-### 5. Format Change Log
-Create structured changelog in Confluence Storage Format:
+### 5. Format Change Log for Confluence
+Create **CONCISE** changelog in Confluence Storage Format (focus on changes, not explanations):
 ```
-<h2>{JIRA-TICKET}: {Ticket Summary}</h2>
-<p><strong>Date:</strong> {current date}</p>
-<p><strong>Author:</strong> {git author}</p>
-<p><strong>Branch:</strong> {branch name}</p>
-<p><strong>Jira Ticket:</strong> <a href="{jira link}">{ticket number}</a></p>
+<h2>{JIRA-TICKET or Branch Name}: {Brief Summary}</h2>
+<p><strong>Date:</strong> {current date} | <strong>Author:</strong> {git author} | <strong>Branch:</strong> {branch name}</p>
+{If Jira ticket exists: <p><strong>Jira:</strong> <a href="{jira link}">{ticket number}</a></p>}
 
 <h3>Overview</h3>
-<p>{AI-generated overview}</p>
+<p>{1-2 sentence summary}</p>
 
 <h3>Technical Changes</h3>
-<p>{AI-generated technical details}</p>
+<ul>
+<li>{Concise bullet points of actual code changes}</li>
+<li>{Focus on WHAT changed, not WHY or HOW to use it}</li>
+</ul>
 
 <h3>Files Changed ({count})</h3>
 <ul>
@@ -143,26 +149,51 @@ Create structured changelog in Confluence Storage Format:
 {commit messages}
 </ul>
 
-<h3>Impact Analysis</h3>
-<p>{AI-generated impact analysis}</p>
-
 <h3>Code Statistics</h3>
 <p>Files changed: {count} | Insertions: {+lines} | Deletions: {-lines}</p>
 ```
 
 ### 6. Publish to Confluence
-- Determine page title format: `Change Log - {YYYY-MM} - {Jira Ticket Summary}`
+- Determine page title format: `Change Log - {YYYY-MM} - {Jira Ticket Summary or Branch Summary}`
   - Example: "Change Log - 2026-01 - OAuth2 사용자 인증 구현"
-  - Use the Jira ticket summary (NOT the ticket number) in the title
+  - Use the Jira ticket summary (NOT the ticket number) in the title if available
+  - If no Jira ticket, use a brief summary of the branch changes
   - Extract YYYY-MM from current date
 - Check if a changelog page with this title already exists under parent page
 - If exists: Append to existing page content using Confluence REST API
 - If not exists: Create new page under parent page with the generated title
 - Use Confluence REST API: PUT `/rest/api/content/{pageId}` to update or POST `/rest/api/content` to create
 
-### 7. Confirm Success
+### 7. Update Jira Ticket (if Jira ticket exists)
+If a Jira ticket number was found or provided:
+- Post a comment to the Jira ticket using Jira REST API: POST `/rest/api/3/issue/{ticketKey}/comment`
+- Comment format should be MORE DETAILED than Confluence (but not overly verbose):
+```
+변경 로그가 Confluence에 게시되었습니다.
+
+📄 Confluence: [Change Log 링크]
+
+## 변경 사항 요약
+{2-3 sentences explaining what was changed and why}
+
+## 주요 변경 내역
+• {Key change 1 with brief context}
+• {Key change 2 with brief context}
+• {Key change 3 with brief context}
+
+## 영향도
+{Brief impact description if significant, otherwise omit}
+
+## 통계
+• 변경 파일: {count}개
+• 추가: +{lines}, 삭제: -{lines}
+• 커밋 수: {count}개
+```
+
+### 8. Confirm Success
 - Display link to updated Confluence page
-- Show summary of what was logged
+- If Jira ticket was updated, display link to Jira ticket
+- Show summary of what was logged (files changed, lines added/deleted, commits)
 
 ## Error Handling
 - If git operations fail, inform user they need to be in a git repository

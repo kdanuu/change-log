@@ -10,7 +10,7 @@ user-invocable: true
 Generates production-ready API client code from Swagger/OpenAPI documentation. Analyzes your project environment (language, framework, code style) and creates type-safe API clients, DTOs, configuration, and tests through interactive clarification.
 
 ## Core Principle
-**ALWAYS ASK, NEVER ASSUME**: This skill operates through continuous dialogue with the user. At every decision point - from technology choices to code structure - it asks for clarification rather than making assumptions. The goal is to generate code that perfectly fits the user's existing project and coding standards.
+**항상 질문하고, 절대 추측하지 않기**: 이 스킬은 사용자와의 지속적인 대화를 통해 동작합니다. 기술 선택부터 코드 구조까지 모든 결정 단계에서 추측하지 않고 명확히 질문합니다. 목표는 사용자의 기존 프로젝트와 코딩 표준에 완벽하게 맞는 코드를 생성하는 것입니다.
 
 ## Features
 - Parse Swagger/OpenAPI documentation (URL or local file)
@@ -45,16 +45,16 @@ Scan the current directory to identify:
 - Framework (from dependencies, imports)
 - Build tool (Gradle, Maven, npm, pip, etc.)
 
-**Ask for confirmation:**
+**사용자에게 확인 요청:**
 ```
-Detected project environment:
-- Language: Kotlin
-- Framework: Spring Boot 3.2.1
-- Build Tool: Gradle (Kotlin DSL)
-- HTTP Client: WebClient (detected from existing code)
+감지된 프로젝트 환경:
+- 언어: Kotlin
+- 프레임워크: Spring Boot 3.2.1
+- 빌드 도구: Gradle (Kotlin DSL)
+- HTTP 클라이언트: WebClient (기존 코드에서 감지됨)
 
-Is this correct? (yes/no)
-If no, please specify your environment:
+맞습니까? (yes/no)
+아니면 환경을 직접 지정해주세요:
 ```
 
 #### Step 1.2: Analyze Code Style
@@ -66,421 +66,421 @@ Scan existing code to understand:
 - Null handling (Optional, nullable, non-null)
 - Async patterns (suspend, CompletableFuture, Promise)
 
-**Ask for confirmation:**
+**사용자에게 확인 요청:**
 ```
-Analyzed code style from existing files:
-- DTOs use data classes
-- Nullable types with ? notation
-- Suspend functions for async operations
-- Jackson annotations for JSON mapping
-- Package structure: com.example.client.api
+기존 파일에서 분석한 코드 스타일:
+- DTO는 data class 사용
+- ? 표기법으로 nullable 타입 처리
+- 비동기 작업은 suspend 함수 사용
+- JSON 매핑은 Jackson 어노테이션 사용
+- 패키지 구조: com.example.client.api
 
-Should I follow these patterns? (yes/no/customize)
+이 패턴들을 따를까요? (yes/no/customize)
 ```
 
 #### Step 1.3: Ask About Project Preferences
 ```
-Project Configuration:
+프로젝트 설정:
 
-1. Where should I place the generated API client code?
-   Suggested: src/main/kotlin/com/example/client/api
-   Custom path: [enter path or press Enter to accept]
+1. 생성된 API 클라이언트 코드를 어디에 배치할까요?
+   제안: src/main/kotlin/com/example/client/api
+   커스텀 경로: [경로 입력 또는 Enter로 승인]
 
-2. Package name for generated code?
-   Suggested: com.example.client.myapi
-   Custom: [enter or press Enter]
+2. 생성된 코드의 패키지명은?
+   제안: com.example.client.myapi
+   커스텀: [입력 또는 Enter]
 
-3. Base class name for the API client?
-   Suggested: MyApiClient
-   Custom: [enter or press Enter]
+3. API 클라이언트의 기본 클래스명은?
+   제안: MyApiClient
+   커스텀: [입력 또는 Enter]
 ```
 
 ### Phase 2: Swagger Analysis & Endpoint Selection
 
 #### Step 2.1: Parse Swagger Document
-**Input Swagger URL or file:**
+**Swagger URL 또는 파일 입력:**
 ```
-User: /api-codegen https://api.example.com/swagger.json
+사용자: /api-codegen https://api.example.com/swagger.json
 
-Parsing OpenAPI specification...
-✅ Loaded: My Example API v2.1.0
-Found: 45 endpoints across 8 tags
+OpenAPI 명세 파싱 중...
+✅ 로드 완료: My Example API v2.1.0
+발견: 8개 태그에 걸쳐 45개 엔드포인트
 ```
 
 #### Step 2.2: Ask About Scope
 ```
-What would you like to generate?
+무엇을 생성하시겠습니까?
 
-1. All endpoints (45 total) - Complete API client
-2. Specific tags - Select by functional groups
-3. Specific endpoints - Choose individual endpoints
-4. Let me guide you - Interactive selection
+1. 모든 엔드포인트 (총 45개) - 전체 API 클라이언트
+2. 특정 태그 - 기능별 그룹으로 선택
+3. 특정 엔드포인트 - 개별 엔드포인트 선택
+4. 안내받기 - 대화형 선택
 
-Enter choice (1-4):
+선택 (1-4):
 ```
 
-**If user selects option 2 (Specific tags):**
+**사용자가 옵션 2 선택시 (특정 태그):**
 ```
-Available tags:
-1. Users (12 endpoints) - User management operations
-2. Products (8 endpoints) - Product catalog operations
-3. Orders (10 endpoints) - Order processing
-4. Payments (5 endpoints) - Payment operations
-5. Auth (3 endpoints) - Authentication & authorization
-6. Admin (7 endpoints) - Admin operations
+사용 가능한 태그:
+1. Users (12개 엔드포인트) - 사용자 관리 작업
+2. Products (8개 엔드포인트) - 상품 카탈로그 작업
+3. Orders (10개 엔드포인트) - 주문 처리
+4. Payments (5개 엔드포인트) - 결제 작업
+5. Auth (3개 엔드포인트) - 인증 및 권한
+6. Admin (7개 엔드포인트) - 관리자 작업
 
-Select tags (comma-separated numbers, e.g., 1,3,4):
+태그 선택 (쉼표로 구분, 예: 1,3,4):
 ```
 
-**If user selects option 3 (Specific endpoints):**
+**사용자가 옵션 3 선택시 (특정 엔드포인트):**
 ```
-Available endpoints:
+사용 가능한 엔드포인트:
 
 Users:
-  1. GET /api/users - List users
-  2. POST /api/users - Create user
-  3. GET /api/users/{id} - Get user by ID
+  1. GET /api/users - 사용자 목록 조회
+  2. POST /api/users - 사용자 생성
+  3. GET /api/users/{id} - ID로 사용자 조회
   ...
 
 Products:
-  12. GET /api/products - List products
-  13. POST /api/products - Create product
+  12. GET /api/products - 상품 목록 조회
+  13. POST /api/products - 상품 생성
   ...
 
-Select endpoints (comma-separated numbers):
+엔드포인트 선택 (쉼표로 구분된 번호):
 ```
 
 ### Phase 3: Technology & Architecture Decisions
 
 #### Step 3.1: HTTP Client Selection
 ```
-Which HTTP client library should I use?
+어떤 HTTP 클라이언트 라이브러리를 사용할까요?
 
-Detected in your project: WebClient (org.springframework.web.reactive.function.client)
+프로젝트에서 감지됨: WebClient (org.springframework.web.reactive.function.client)
 
-1. Use existing: WebClient ✓ (Recommended - already in project)
-2. RestTemplate (Spring's traditional HTTP client)
-3. Retrofit (Type-safe HTTP client)
-4. OkHttp (Low-level HTTP client)
-5. Other (please specify)
+1. 기존 사용: WebClient ✓ (권장 - 이미 프로젝트에 존재)
+2. RestTemplate (Spring의 전통적인 HTTP 클라이언트)
+3. Retrofit (타입 안전한 HTTP 클라이언트)
+4. OkHttp (저수준 HTTP 클라이언트)
+5. 기타 (직접 지정)
 
-Enter choice (1-5): 1
+선택 (1-5): 1
 ```
 
 #### Step 3.2: Async/Sync Pattern
 ```
-Should the generated client be synchronous or asynchronous?
+생성된 클라이언트를 동기식으로 할까요, 비동기식으로 할까요?
 
-Based on your project:
-- Found suspend functions in existing code
-- Kotlin Coroutines dependency detected
+프로젝트 분석 결과:
+- 기존 코드에서 suspend 함수 발견
+- Kotlin Coroutines 의존성 감지됨
 
-1. Asynchronous with Coroutines (suspend functions) ✓ Recommended
-2. Synchronous (blocking calls)
-3. Reactive (Mono/Flux)
-4. Mix - ask for each endpoint
+1. Coroutines 비동기 (suspend 함수) ✓ 권장
+2. 동기식 (블로킹 호출)
+3. 리액티브 (Mono/Flux)
+4. 혼합 - 각 엔드포인트마다 질문
 
-Enter choice (1-4):
+선택 (1-4):
 ```
 
 #### Step 3.3: DTO Generation Strategy
 ```
-How should I handle Request/Response DTOs?
+Request/Response DTO를 어떻게 처리할까요?
 
-1. Generate all DTOs from OpenAPI schemas ✓ Recommended
-2. Generate only new DTOs (reuse existing if found)
-3. Skip DTO generation (use Map/JsonNode)
-4. Let me decide for each schema
+1. OpenAPI 스키마로부터 모든 DTO 생성 ✓ 권장
+2. 새로운 DTO만 생성 (발견되면 기존 재사용)
+3. DTO 생성 건너뛰기 (Map/JsonNode 사용)
+4. 각 스키마마다 결정
 
-Enter choice (1-4): 1
+선택 (1-4): 1
 
-Additional DTO options:
-- Use data classes? (yes/no): yes
-- Generate builder pattern? (yes/no): no
-- Include validation annotations? (yes/no): yes
-- Generate documentation from OpenAPI descriptions? (yes/no): yes
+추가 DTO 옵션:
+- data class 사용? (yes/no): yes
+- builder 패턴 생성? (yes/no): no
+- 검증 어노테이션 포함? (yes/no): yes
+- OpenAPI 설명으로 문서 생성? (yes/no): yes
 ```
 
 #### Step 3.4: Error Handling
 ```
-How should the client handle API errors?
+클라이언트가 API 오류를 어떻게 처리할까요?
 
-1. Throw exceptions (follow existing pattern in project)
-2. Return Result/Either type (functional approach)
-3. Return nullable with logging
-4. Custom error handler (I'll specify)
+1. 예외 던지기 (프로젝트의 기존 패턴 따르기)
+2. Result/Either 타입 반환 (함수형 접근)
+3. nullable 반환 및 로깅
+4. 커스텀 에러 핸들러 (직접 지정)
 
-Enter choice (1-4): 1
+선택 (1-4): 1
 
-Exception hierarchy:
-1. Use existing exceptions (ApiException detected)
-2. Generate new exception classes
-3. Use standard HTTP exceptions
+예외 계층구조:
+1. 기존 예외 사용 (ApiException 감지됨)
+2. 새로운 예외 클래스 생성
+3. 표준 HTTP 예외 사용
 
-Enter choice (1-3):
+선택 (1-3):
 ```
 
 #### Step 3.5: Authentication
 ```
-Authentication method detected in OpenAPI spec: Bearer Token
+OpenAPI 명세에서 감지된 인증 방식: Bearer Token
 
-How should authentication be handled?
+인증을 어떻게 처리할까요?
 
-1. Inject token via constructor/property
-2. Token provider interface (I'll implement)
-3. Interceptor/Filter for automatic token injection ✓ Recommended
-4. Manual token passing per request
+1. 생성자/프로퍼티로 토큰 주입
+2. 토큰 제공자 인터페이스 (직접 구현)
+3. 자동 토큰 주입을 위한 인터셉터/필터 ✓ 권장
+4. 요청마다 수동으로 토큰 전달
 
-Enter choice (1-4): 3
+선택 (1-4): 3
 
-Where should I get the token from?
-1. Configuration properties (application.yml)
-2. Token provider bean
+토큰을 어디서 가져올까요?
+1. 설정 프로퍼티 (application.yml)
+2. 토큰 제공자 빈
 3. SecurityContext (Spring Security)
-4. Custom (I'll specify)
+4. 커스텀 (직접 지정)
 
-Enter choice (1-4):
+선택 (1-4):
 ```
 
 ### Phase 4: Code Structure & Patterns
 
 #### Step 4.1: Client Architecture
 ```
-How should the API client be structured?
+API 클라이언트를 어떻게 구조화할까요?
 
-1. Single client class with all methods
-   MyApiClient with 45 methods
+1. 모든 메서드를 포함하는 단일 클라이언트 클래스
+   MyApiClient에 45개 메서드
 
-2. Separate clients by tag ✓ Recommended for large APIs
-   - UserApiClient (12 methods)
-   - ProductApiClient (8 methods)
-   - OrderApiClient (10 methods)
+2. 태그별로 클라이언트 분리 ✓ 대규모 API에 권장
+   - UserApiClient (12개 메서드)
+   - ProductApiClient (8개 메서드)
+   - OrderApiClient (10개 메서드)
    ...
 
-3. Separate clients by domain logic (I'll specify grouping)
+3. 도메인 로직별로 클라이언트 분리 (그룹화 직접 지정)
 
-4. Mix of approaches (I'll guide)
+4. 접근 방식 혼합 (안내받기)
 
-Enter choice (1-4): 2
+선택 (1-4): 2
 ```
 
 #### Step 4.2: Configuration Management
 ```
-How should API configuration be managed?
+API 설정을 어떻게 관리할까요?
 
-Detected: application.yml with Spring Boot configuration
+감지됨: Spring Boot 설정이 있는 application.yml
 
-1. Generate configuration properties class ✓ Recommended
+1. 설정 프로퍼티 클래스 생성 ✓ 권장
    @ConfigurationProperties("myapi")
 
-2. Use environment variables directly
-3. Hardcode configuration (not recommended)
-4. Custom configuration (I'll specify)
+2. 환경 변수 직접 사용
+3. 설정 하드코딩 (권장하지 않음)
+4. 커스텀 설정 (직접 지정)
 
-Enter choice (1-4): 1
+선택 (1-4): 1
 
-Configuration properties to include:
+포함할 설정 프로퍼티:
 ✓ Base URL (myapi.base-url)
-✓ Connection timeout (myapi.timeout.connection)
-✓ Read timeout (myapi.timeout.read)
-□ Retry configuration
-□ Circuit breaker settings
+✓ 연결 타임아웃 (myapi.timeout.connection)
+✓ 읽기 타임아웃 (myapi.timeout.read)
+□ 재시도 설정
+□ 서킷 브레이커 설정
 □ Rate limiting
 
-Select additional options (comma-separated numbers, or Enter to skip):
+추가 옵션 선택 (쉼표로 구분된 번호, 또는 Enter로 건너뛰기):
 ```
 
 #### Step 4.3: Logging & Monitoring
 ```
-Add logging and monitoring?
+로깅과 모니터링을 추가할까요?
 
-1. Add logging statements (SLF4J detected) ✓ Recommended
-   - Log requests at DEBUG level
-   - Log responses at DEBUG level
-   - Log errors at ERROR level
+1. 로깅 문구 추가 (SLF4J 감지됨) ✓ 권장
+   - DEBUG 레벨에서 요청 로그
+   - DEBUG 레벨에서 응답 로그
+   - ERROR 레벨에서 오류 로그
 
-2. Add metrics (Micrometer detected)
-   - Request counters
-   - Duration timers
-   - Error rates
+2. 메트릭 추가 (Micrometer 감지됨)
+   - 요청 카운터
+   - 지속시간 타이머
+   - 오류율
 
-3. Add distributed tracing (Sleuth detected)
-   - Trace ID propagation
-   - Span creation for API calls
+3. 분산 추적 추가 (Sleuth 감지됨)
+   - 추적 ID 전파
+   - API 호출용 Span 생성
 
-4. Skip logging/monitoring
+4. 로깅/모니터링 건너뛰기
 
-Select all that apply (comma-separated, e.g., 1,2,3):
+적용할 항목 모두 선택 (쉼표로 구분, 예: 1,2,3):
 ```
 
 ### Phase 5: Advanced Features
 
 #### Step 5.1: Request/Response Interceptors
 ```
-Would you like to add interceptors?
+인터셉터를 추가하시겠습니까?
 
-1. Request interceptor (modify outgoing requests)
-   Examples: Add headers, log requests, modify body
+1. 요청 인터셉터 (나가는 요청 수정)
+   예시: 헤더 추가, 요청 로그, 본문 수정
 
-2. Response interceptor (process responses)
-   Examples: Parse errors, log responses, extract headers
+2. 응답 인터셉터 (응답 처리)
+   예시: 오류 파싱, 응답 로그, 헤더 추출
 
-3. Both
+3. 둘 다
 
-4. None
+4. 없음
 
-Enter choice (1-4): 3
+선택 (1-4): 3
 
-Request interceptor functionality:
-□ Add custom headers
-□ Log request details
-□ Add correlation ID
-□ Request validation
-☑ Add authentication token
+요청 인터셉터 기능:
+□ 커스텀 헤더 추가
+□ 요청 상세 로그
+□ Correlation ID 추가
+□ 요청 검증
+☑ 인증 토큰 추가
 
-Response interceptor functionality:
-□ Parse error responses
-□ Log response details
-☑ Extract response headers
-□ Response validation
-□ Retry on failure
+응답 인터셉터 기능:
+□ 오류 응답 파싱
+□ 응답 상세 로그
+☑ 응답 헤더 추출
+□ 응답 검증
+□ 실패 시 재시도
 
-Select (comma-separated numbers or Enter to use defaults):
+선택 (쉼표로 구분된 번호 또는 Enter로 기본값 사용):
 ```
 
 #### Step 5.2: Pagination Support
 ```
-API uses pagination. Generate pagination helpers?
+API가 페이지네이션을 사용합니다. 페이지네이션 헬퍼를 생성할까요?
 
-Detected pagination pattern: offset/limit
+감지된 페이지네이션 패턴: offset/limit
 
-1. Generate pagination utilities
-   - PageRequest builder
-   - Page wrapper for responses
-   - Automatic page fetching
+1. 페이지네이션 유틸리티 생성
+   - PageRequest 빌더
+   - 응답용 Page 래퍼
+   - 자동 페이지 가져오기
 
-2. Skip pagination helpers
+2. 페이지네이션 헬퍼 건너뛰기
 
-Enter choice (1-2): 1
+선택 (1-2): 1
 
-Pagination style:
-1. Offset-based (offset/limit)
-2. Page-based (page/size)
-3. Cursor-based (cursor/next)
+페이지네이션 스타일:
+1. Offset 기반 (offset/limit)
+2. Page 기반 (page/size)
+3. Cursor 기반 (cursor/next)
 
-Detected in API: Option 1 (offset/limit)
-Use this? (yes/no): yes
+API에서 감지됨: 옵션 1 (offset/limit)
+사용할까요? (yes/no): yes
 ```
 
 #### Step 5.3: Response Caching
 ```
-Add response caching?
+응답 캐싱을 추가할까요?
 
-1. No caching
-2. In-memory caching (Caffeine)
-3. Distributed caching (Redis)
-4. HTTP cache headers only
+1. 캐싱 없음
+2. 인메모리 캐싱 (Caffeine)
+3. 분산 캐싱 (Redis)
+4. HTTP 캐시 헤더만 사용
 
-Enter choice (1-4): 1
+선택 (1-4): 1
 
-(Selected: No caching - can be added later if needed)
+(선택됨: 캐싱 없음 - 필요시 나중에 추가 가능)
 ```
 
 ### Phase 6: Test Code Generation
 
 #### Step 6.1: Test Framework
 ```
-Generate tests?
+테스트를 생성할까요?
 
-Detected: JUnit 5, MockK
+감지됨: JUnit 5, MockK
 
-1. Generate unit tests ✓
-   - Mock HTTP client
-   - Test request building
-   - Test response parsing
-   - Test error handling
+1. 단위 테스트 생성 ✓
+   - HTTP 클라이언트 모킹
+   - 요청 빌딩 테스트
+   - 응답 파싱 테스트
+   - 오류 처리 테스트
 
-2. Generate integration tests
-   - Use WireMock for API mocking
-   - Test full request/response cycle
+2. 통합 테스트 생성
+   - API 모킹에 WireMock 사용
+   - 전체 요청/응답 사이클 테스트
 
-3. Both unit and integration tests ✓ Recommended
+3. 단위 및 통합 테스트 모두 ✓ 권장
 
-4. Skip tests
+4. 테스트 건너뛰기
 
-Enter choice (1-4): 3
+선택 (1-4): 3
 ```
 
 #### Step 6.2: Test Coverage
 ```
-Test coverage level?
+테스트 커버리지 레벨은?
 
-1. Basic tests (happy path only)
-2. Standard tests (happy path + common errors) ✓ Recommended
-3. Comprehensive tests (all scenarios + edge cases)
+1. 기본 테스트 (정상 경로만)
+2. 표준 테스트 (정상 경로 + 일반적인 오류) ✓ 권장
+3. 포괄적 테스트 (모든 시나리오 + 엣지 케이스)
 
-Enter choice (1-3): 2
+선택 (1-3): 2
 
-Test scenarios to include:
-✓ Successful responses (200, 201, 204)
-✓ Client errors (400, 401, 403, 404)
-✓ Server errors (500, 503)
-□ Network errors (timeout, connection refused)
-□ Malformed responses
+포함할 테스트 시나리오:
+✓ 성공 응답 (200, 201, 204)
+✓ 클라이언트 오류 (400, 401, 403, 404)
+✓ 서버 오류 (500, 503)
+□ 네트워크 오류 (타임아웃, 연결 거부)
+□ 잘못된 형식의 응답
 □ Rate limiting (429)
 
-Select additional scenarios (comma-separated numbers or Enter to skip):
+추가 시나리오 선택 (쉼표로 구분된 번호 또는 Enter로 건너뛰기):
 ```
 
 ### Phase 7: Code Generation & Review
 
 #### Step 7.1: Generate Code Preview
 ```
-=== CODE GENERATION PREVIEW ===
+=== 코드 생성 미리보기 ===
 
-Files to be created:
+생성될 파일:
 
-API Clients (3 files):
-  ✓ src/main/kotlin/com/example/client/myapi/UserApiClient.kt (245 lines)
-  ✓ src/main/kotlin/com/example/client/myapi/ProductApiClient.kt (180 lines)
-  ✓ src/main/kotlin/com/example/client/myapi/OrderApiClient.kt (210 lines)
+API 클라이언트 (3개 파일):
+  ✓ src/main/kotlin/com/example/client/myapi/UserApiClient.kt (245줄)
+  ✓ src/main/kotlin/com/example/client/myapi/ProductApiClient.kt (180줄)
+  ✓ src/main/kotlin/com/example/client/myapi/OrderApiClient.kt (210줄)
 
-DTOs (28 files):
+DTO (28개 파일):
   ✓ src/main/kotlin/com/example/client/myapi/dto/UserDto.kt
   ✓ src/main/kotlin/com/example/client/myapi/dto/CreateUserRequest.kt
-  ... (26 more)
+  ... (26개 더)
 
-Configuration (2 files):
+설정 (2개 파일):
   ✓ src/main/kotlin/com/example/client/myapi/config/MyApiClientConfig.kt
   ✓ src/main/kotlin/com/example/client/myapi/config/MyApiProperties.kt
 
-Interceptors (2 files):
+인터셉터 (2개 파일):
   ✓ src/main/kotlin/com/example/client/myapi/interceptor/AuthInterceptor.kt
   ✓ src/main/kotlin/com/example/client/myapi/interceptor/LoggingInterceptor.kt
 
-Tests (6 files):
+테스트 (6개 파일):
   ✓ src/test/kotlin/com/example/client/myapi/UserApiClientTest.kt
-  ... (5 more)
+  ... (5개 더)
 
-Dependencies to add:
+추가할 의존성:
   ✓ build.gradle.kts
-    - org.springframework.boot:spring-boot-starter-webflux (already exists)
-    - com.fasterxml.jackson.module:jackson-module-kotlin (already exists)
+    - org.springframework.boot:spring-boot-starter-webflux (이미 존재)
+    - com.fasterxml.jackson.module:jackson-module-kotlin (이미 존재)
 
-Configuration files to update:
+업데이트할 설정 파일:
   ✓ src/main/resources/application.yml
-    Add myapi configuration section
+    myapi 설정 섹션 추가
 
-Total: 41 files, ~2,450 lines of code
+총: 41개 파일, 약 2,450줄의 코드
 
-Proceed with generation? (yes/no/show-sample):
+생성을 진행할까요? (yes/no/show-sample):
 ```
 
 #### Step 7.2: Show Sample Code (if requested)
 ```
-User selects "show-sample"
+사용자가 "show-sample" 선택
 
-=== SAMPLE: UserApiClient.kt ===
+=== 샘플: UserApiClient.kt ===
 
 package com.example.client.myapi
 
@@ -545,7 +545,7 @@ class UserApiClient(
     // ... more methods
 }
 
-=== SAMPLE: UserDto.kt ===
+=== 샘플: UserDto.kt ===
 
 package com.example.client.myapi.dto
 
@@ -577,7 +577,7 @@ data class UserDto(
     val createdAt: Instant
 )
 
-=== SAMPLE: UserApiClientTest.kt ===
+=== 샘플: UserApiClientTest.kt ===
 
 package com.example.client.myapi
 
@@ -618,36 +618,36 @@ class UserApiClientTest {
     // ... more tests
 }
 
-Proceed with generation? (yes/no):
+생성을 진행할까요? (yes/no):
 ```
 
 #### Step 7.3: Generate Code
 ```
-User: yes
+사용자: yes
 
-Generating code...
+코드 생성 중...
 
-✓ Created UserApiClient.kt
-✓ Created ProductApiClient.kt
-✓ Created OrderApiClient.kt
-✓ Generated 28 DTO files
-✓ Created configuration classes
-✓ Created interceptors
-✓ Generated 6 test files
-✓ Updated build.gradle.kts
-✓ Updated application.yml
+✓ UserApiClient.kt 생성됨
+✓ ProductApiClient.kt 생성됨
+✓ OrderApiClient.kt 생성됨
+✓ 28개 DTO 파일 생성됨
+✓ 설정 클래스 생성됨
+✓ 인터셉터 생성됨
+✓ 6개 테스트 파일 생성됨
+✓ build.gradle.kts 업데이트됨
+✓ application.yml 업데이트됨
 
-=== Generation Complete ===
+=== 생성 완료 ===
 
-Summary:
-- 41 files created
-- 2,450 lines of code generated
-- 0 errors, 0 warnings
+요약:
+- 41개 파일 생성됨
+- 2,450줄의 코드 생성됨
+- 0개 오류, 0개 경고
 
-Next steps:
-1. Review generated code
-2. Run tests: ./gradlew test
-3. Update application.yml with your API base URL:
+다음 단계:
+1. 생성된 코드 검토
+2. 테스트 실행: ./gradlew test
+3. application.yml을 API base URL로 업데이트:
 
    myapi:
      base-url: https://api.example.com
@@ -655,7 +655,7 @@ Next steps:
        connection: 5000
        read: 10000
 
-4. Use the client:
+4. 클라이언트 사용:
 
    @Autowired
    lateinit var userApiClient: UserApiClient
@@ -665,22 +665,22 @@ Next steps:
        println("Found ${users.total} users")
    }
 
-Would you like me to:
-1. Run the tests now
-2. Show usage examples
-3. Generate documentation
-4. Done
+무엇을 도와드릴까요?
+1. 지금 테스트 실행
+2. 사용 예제 보기
+3. 문서 생성
+4. 완료
 
-Enter choice (1-4):
+선택 (1-4):
 ```
 
 ### Phase 8: Post-Generation Options
 
 #### Option 1: Run Tests
 ```
-User: 1
+사용자: 1
 
-Running tests...
+테스트 실행 중...
 
 $ ./gradlew test --tests "*ApiClientTest"
 
@@ -690,27 +690,27 @@ UserApiClientTest
   ✓ listUsers should return user list successfully (245ms)
   ✓ createUser should create user successfully (180ms)
   ✓ listUsers should handle 401 error (95ms)
-  ... (12 more tests)
+  ... (12개 더)
 
 ProductApiClientTest
-  ... (8 tests)
+  ... (8개 테스트)
 
 OrderApiClientTest
-  ... (10 tests)
+  ... (10개 테스트)
 
 BUILD SUCCESSFUL in 5s
-30 tests completed, 30 passed
+30개 테스트 완료, 30개 통과
 
-All tests passed! ✓
+모든 테스트 통과! ✓
 ```
 
 #### Option 2: Show Usage Examples
 ```
-User: 2
+사용자: 2
 
-=== Usage Examples ===
+=== 사용 예제 ===
 
-1. Basic Usage (Single Endpoint):
+1. 기본 사용법 (단일 엔드포인트):
 
 ```kotlin
 @Service
@@ -727,7 +727,7 @@ class UserService(
 }
 ```
 
-2. Error Handling:
+2. 오류 처리:
 
 ```kotlin
 suspend fun createUserSafely(request: CreateUserRequest): UserDto? {
@@ -735,16 +735,16 @@ suspend fun createUserSafely(request: CreateUserRequest): UserDto? {
         userApiClient.createUser(request)
     } catch (e: ApiException) {
         when (e.statusCode) {
-            400 -> logger.warn("Invalid request: ${e.message}")
-            401 -> logger.error("Unauthorized: Check API token")
-            else -> logger.error("API error: ${e.message}", e)
+            400 -> logger.warn("잘못된 요청: ${e.message}")
+            401 -> logger.error("인증되지 않음: API 토큰 확인")
+            else -> logger.error("API 오류: ${e.message}", e)
         }
         null
     }
 }
 ```
 
-3. Pagination:
+3. 페이지네이션:
 
 ```kotlin
 suspend fun fetchAllUsers(): List<UserDto> {
@@ -763,7 +763,7 @@ suspend fun fetchAllUsers(): List<UserDto> {
 }
 ```
 
-4. Configuration:
+4. 설정:
 
 ```yaml
 # application.yml
@@ -773,103 +773,103 @@ myapi:
     connection: 5000
     read: 10000
   auth:
-    token: ${API_TOKEN:}  # Set via environment variable
+    token: ${API_TOKEN:}  # 환경 변수로 설정
 ```
 ```
 
 #### Option 3: Generate Documentation
 ```
-User: 3
+사용자: 3
 
-Generating documentation...
+문서 생성 중...
 
-✓ Created docs/API_CLIENT_GUIDE.md
-✓ Created docs/API_REFERENCE.md
-✓ Added KDoc comments to all generated classes
+✓ docs/API_CLIENT_GUIDE.md 생성됨
+✓ docs/API_REFERENCE.md 생성됨
+✓ 모든 생성된 클래스에 KDoc 주석 추가됨
 
-Documentation includes:
-- Setup instructions
-- Configuration guide
-- Usage examples for each endpoint
-- Error handling guide
-- Testing guide
-- Troubleshooting
+문서 포함 내용:
+- 설정 지침
+- 설정 가이드
+- 각 엔드포인트 사용 예제
+- 오류 처리 가이드
+- 테스팅 가이드
+- 문제 해결
 
-View documentation: docs/API_CLIENT_GUIDE.md
+문서 보기: docs/API_CLIENT_GUIDE.md
 ```
 
 ## Advanced Scenarios
 
 ### Scenario 1: Update Existing Generated Code
 ```
-User: /api-codegen --update https://api.example.com/swagger.json
+사용자: /api-codegen --update https://api.example.com/swagger.json
 
-Detected existing generated code in com.example.client.myapi
+com.example.client.myapi에서 기존 생성 코드 감지됨
 
-Comparing with new OpenAPI specification...
+새 OpenAPI 명세와 비교 중...
 
-Changes detected:
-- 3 new endpoints added
-- 2 endpoints modified
-- 1 endpoint removed (deprecated)
-- 5 DTOs updated
+감지된 변경사항:
+- 3개 새 엔드포인트 추가됨
+- 2개 엔드포인트 수정됨
+- 1개 엔드포인트 제거됨 (deprecated)
+- 5개 DTO 업데이트됨
 
-What would you like to do?
-1. Regenerate all (overwrite existing)
-2. Update only changed files ✓ Recommended
-3. Generate new files only (keep existing)
-4. Show detailed diff first
+어떻게 하시겠습니까?
+1. 모두 재생성 (기존 덮어쓰기)
+2. 변경된 파일만 업데이트 ✓ 권장
+3. 새 파일만 생성 (기존 유지)
+4. 먼저 상세한 diff 보기
 
-Enter choice (1-4):
+선택 (1-4):
 ```
 
 ### Scenario 2: Multiple API Sources
 ```
-User: /api-codegen --multiple
+사용자: /api-codegen --multiple
 
-How many APIs do you want to integrate?
-Enter number: 3
+통합하려는 API가 몇 개입니까?
+숫자 입력: 3
 
 API 1:
-  Name: User Service
+  이름: User Service
   Swagger URL: https://users-api.example.com/swagger.json
-  Package: com.example.client.users
+  패키지: com.example.client.users
 
 API 2:
-  Name: Product Service
+  이름: Product Service
   Swagger URL: https://products-api.example.com/swagger.json
-  Package: com.example.client.products
+  패키지: com.example.client.products
 
 API 3:
-  Name: Order Service
+  이름: Order Service
   Swagger URL: https://orders-api.example.com/swagger.json
-  Package: com.example.client.orders
+  패키지: com.example.client.orders
 
-Generate shared configuration? (yes/no): yes
-Generate facade for cross-service operations? (yes/no): yes
+공유 설정 생성? (yes/no): yes
+크로스 서비스 작업을 위한 facade 생성? (yes/no): yes
 ```
 
 ### Scenario 3: Custom Templates
 ```
-User: /api-codegen --template custom
+사용자: /api-codegen --template custom
 
-Using custom code templates?
+커스텀 코드 템플릿을 사용하시겠습니까?
 
-1. Use default templates
-2. Use custom templates from: .claude/api-codegen-templates/
-3. Specify custom template directory
+1. 기본 템플릿 사용
+2. 다음 경로의 커스텀 템플릿 사용: .claude/api-codegen-templates/
+3. 커스텀 템플릿 디렉토리 지정
 
-Enter choice (1-3): 2
+선택 (1-3): 2
 
-Detected custom templates:
+감지된 커스텀 템플릿:
 ✓ client.kt.template
 ✓ dto.kt.template
 ✓ test.kt.template
 
-Validate templates? (yes/no): yes
-Templates validated successfully ✓
+템플릿을 검증할까요? (yes/no): yes
+템플릿 검증 성공 ✓
 
-Proceed with custom templates? (yes/no):
+커스텀 템플릿으로 진행할까요? (yes/no):
 ```
 
 ## Configuration File
@@ -912,70 +912,75 @@ Proceed with custom templates? (yes/no):
 
 1. **OpenAPI Spec Parsing Errors**
 ```
-❌ Failed to parse OpenAPI specification
+❌ OpenAPI 명세 파싱 실패
 
-Error: Invalid JSON at line 45, column 12
+오류: 45번째 줄, 12번째 열에서 잘못된 JSON
 
-Would you like me to:
-1. Show the problematic section
-2. Try to fix automatically
-3. Skip invalid sections
-4. Cancel
+어떻게 하시겠습니까?
+1. 문제가 있는 섹션 보기
+2. 자동으로 수정 시도
+3. 잘못된 섹션 건너뛰기
+4. 취소
 
-Enter choice (1-4):
+선택 (1-4):
 ```
 
 2. **Dependency Conflicts**
 ```
-⚠️ Dependency conflict detected
+⚠️ 의존성 충돌 감지됨
 
-Required: org.springframework.boot:spring-boot-starter-webflux:3.2.1
-Existing: org.springframework.boot:spring-boot-starter-web:3.2.0
+필요: org.springframework.boot:spring-boot-starter-webflux:3.2.1
+기존: org.springframework.boot:spring-boot-starter-web:3.2.0
 
-These dependencies may conflict (WebFlux vs Web MVC)
+이 의존성들은 충돌할 수 있습니다 (WebFlux vs Web MVC)
 
-Resolution options:
-1. Keep existing and use RestTemplate instead
-2. Replace with WebFlux (may affect other code)
-3. Add both (not recommended - may cause conflicts)
-4. Cancel generation
+해결 옵션:
+1. 기존 유지 및 대신 RestTemplate 사용
+2. WebFlux로 교체 (다른 코드에 영향 가능)
+3. 둘 다 추가 (권장하지 않음 - 충돌 가능)
+4. 생성 취소
 
-Enter choice (1-4):
+선택 (1-4):
 ```
 
 3. **Code Generation Failures**
 ```
-❌ Failed to generate UserApiClient.kt
+❌ UserApiClient.kt 생성 실패
 
-Error: File already exists and has local modifications
+오류: 파일이 이미 존재하며 로컬 수정이 있습니다
 
-Options:
-1. Overwrite (lose local changes)
-2. Merge (attempt to preserve local changes)
-3. Skip this file
-4. Cancel entire generation
+옵션:
+1. 덮어쓰기 (로컬 변경사항 손실)
+2. 병합 (로컬 변경사항 보존 시도)
+3. 이 파일 건너뛰기
+4. 전체 생성 취소
 
-Enter choice (1-4):
+선택 (1-4):
 ```
 
 ## Security Considerations
 
-- **API Tokens**: Never hardcode in generated code, always use configuration
-- **Sensitive Data**: Mask sensitive fields in logs
-- **HTTPS Only**: Warn if base URL is not HTTPS
-- **Input Validation**: Generate validation for all DTOs
-- **Rate Limiting**: Respect API rate limits
+- **API Tokens**: 생성된 코드에 절대 하드코딩하지 말고, 항상 설정 사용
+- **민감 데이터**: 로그에서 민감한 필드 마스킹
+- **HTTPS Only**: base URL이 HTTPS가 아니면 경고
+- **Input Validation**: 모든 DTO에 대한 검증 생성
+- **Rate Limiting**: API rate limit 준수
 
 ## Tips for Users
 
-1. **Start Small**: Generate code for a few endpoints first, then expand
-2. **Review Generated Code**: Always review before committing
-3. **Customize Templates**: Create templates for consistent code style
-4. **Keep in Sync**: Regenerate when API changes
-5. **Test Thoroughly**: Run generated tests and add custom tests
-6. **Version Control**: Commit generated code with clear messages
+1. **작게 시작하기**: 먼저 몇 개의 엔드포인트만 생성한 후 확장
+2. **생성된 코드 검토**: 커밋하기 전에 항상 검토
+3. **템플릿 커스터마이징**: 일관된 코드 스타일을 위한 템플릿 생성
+4. **동기화 유지**: API 변경 시 재생성
+5. **철저한 테스트**: 생성된 테스트 실행 및 커스텀 테스트 추가
+6. **버전 관리**: 명확한 메시지와 함께 생성된 코드 커밋
 
 ## Example Session
 
 ```
-User: /api-codegen https://api.example.com/swagger.json
+사용자: /api-codegen https://api.example.com/swagger.json
+
+https://api.example.com/swagger.json의 OpenAPI 명세로부터 API 클라이언트 코드를 생성하도록 돕겠습니다.
+
+프로젝트 환경을 분석하고 OpenAPI 명세를 가져오겠습니다.
+```
